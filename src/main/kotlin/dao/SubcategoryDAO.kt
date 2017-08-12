@@ -6,15 +6,13 @@ import com.j256.ormlite.table.TableUtils
 import origin.Subcategory
 
 class SubcategoryDAO(connectionSource: ConnectionSource) {
-    private var dao = DaoManager.createDao(connectionSource, Subcategory::class.java)
+    private val dao = DaoManager.createDao(connectionSource, Subcategory::class.java)
 
     init {
         TableUtils.createTableIfNotExists(connectionSource, Subcategory::class.java)
     }
 
-    fun saveList(subcategories: List<Subcategory>) {
-        subcategories.forEach { dao.createOrUpdate(it) }
-    }
+    fun saveList(subcategories: List<Subcategory>) = subcategories.forEach { dao.createOrUpdate(it) }
 
-    fun loadList()= dao.queryForAll()
+    fun loadList() = dao.queryForAll()
 }

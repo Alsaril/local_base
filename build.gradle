@@ -27,6 +27,7 @@ dependencies {
     compile "com.google.code.gson:gson:2.8.0"
     compile "com.j256.ormlite:ormlite-core:4.45"
     compile "com.j256.ormlite:ormlite-jdbc:4.45"
+    compile "org.xerial:sqlite-jdbc:3.20.0"
 }
 
 compileKotlin {

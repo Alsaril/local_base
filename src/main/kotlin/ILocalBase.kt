@@ -4,7 +4,6 @@ import origin.ProductsData
 import origin.Subcategory
 
 interface ILocalBase {
-    fun init()
     fun save(data: ProductsData)
     fun getProducts(): List<Product>
     fun getCategories(): List<Category>

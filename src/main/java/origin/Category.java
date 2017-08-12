@@ -16,6 +16,9 @@ public class Category {
     @DatabaseField
     private String name;
 
+    public Category() {
+    }
+
     public Category(String name) {
         this.name = name;
     }

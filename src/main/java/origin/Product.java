@@ -30,6 +30,7 @@ public class Product {
     @SerializedName("barcode")
     @Expose
     @DatabaseField(columnName = "barcode")
+
     private String barcode;
     @SerializedName("vendor")
     @Expose
@@ -63,6 +64,9 @@ public class Product {
     @Expose
     @DatabaseField(columnName = "category")
     private Integer category;
+
+    public Product() {
+    }
 
     public Product(String name, float price) {
         name = this.name;

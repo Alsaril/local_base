@@ -12,9 +12,7 @@ class CategoryDAO(connectionSource: ConnectionSource) {
         TableUtils.createTableIfNotExists(connectionSource, Category::class.java)
     }
 
-    fun saveList(categories: List<Category>) {
-        categories.forEach { dao.createOrUpdate(it) }
-    }
+    fun saveList(categories: List<Category>) = categories.forEach { dao.createOrUpdate(it) }
 
     fun loadList() = dao.queryForAll()
 }

@@ -18,7 +18,11 @@ public class Subcategory {
     @SerializedName("name")
     @Expose
     @DatabaseField
+
     private String name;
+
+    public Subcategory() {
+    }
 
     public Subcategory(String name) {
         this.name = name;

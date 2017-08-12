@@ -6,15 +6,13 @@ import com.j256.ormlite.table.TableUtils
 import origin.Product
 
 class ProductDAO(connectionSource: ConnectionSource) {
-    private var dao = DaoManager.createDao(connectionSource, Product::class.java)
+    private val dao = DaoManager.createDao(connectionSource, Product::class.java)
 
     init {
         TableUtils.createTableIfNotExists(connectionSource, Product::class.java)
     }
 
-    fun saveList(products: List<Product>) {
-        products.forEach { dao.createOrUpdate(it) }
-    }
+    fun saveList(products: List<Product>) = products.forEach { dao.createOrUpdate(it) }
 
     fun loadList() = dao.queryForAll()
 
