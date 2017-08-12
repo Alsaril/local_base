@@ -5,14 +5,17 @@ import com.j256.ormlite.support.ConnectionSource
 import com.j256.ormlite.table.TableUtils
 import origin.Subcategory
 
-class SubcategoryDAO(connectionSource: ConnectionSource) {
+class SubcategoryDAO(private val connectionSource: ConnectionSource) {
     private val dao = DaoManager.createDao(connectionSource, Subcategory::class.java)
 
     init {
         TableUtils.createTableIfNotExists(connectionSource, Subcategory::class.java)
     }
 
-    fun saveList(subcategories: List<Subcategory>) = subcategories.forEach { dao.createOrUpdate(it) }
+    fun saveList(subcategories: List<Subcategory>) {
+        TableUtils.clearTable(connectionSource, Subcategory::class.java)
+        subcategories.forEach { dao.createOrUpdate(it) }
+    }
 
     fun loadList() = dao.queryForAll()
 }
