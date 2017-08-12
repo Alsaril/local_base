@@ -24,14 +24,14 @@ object LocalBase : ILocalBase {
                     println("A new Database has been created.")
                 }
             }
+
+            val connectionSource: ConnectionSource = JdbcConnectionSource(DATABASE_URL);
+            categoryDao = CategoryDAO(connectionSource)
+            subcategoryDao = SubcategoryDAO(connectionSource)
+            productDao = ProductDAO(connectionSource)
         } catch (e: SQLException) {
             println(e.message)
         }
-
-        val connectionSource: ConnectionSource = JdbcConnectionSource(DATABASE_URL);
-        categoryDao = CategoryDAO(connectionSource)
-        subcategoryDao = SubcategoryDAO(connectionSource)
-        productDao = ProductDAO(connectionSource)
     }
 
     override fun save(data: ProductsData) {
