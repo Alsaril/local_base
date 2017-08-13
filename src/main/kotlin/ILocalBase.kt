@@ -1,7 +1,4 @@
-import origin.Category
-import origin.Product
-import origin.ProductsData
-import origin.Subcategory
+import origin.*
 
 interface ILocalBase {
     fun save(data: ProductsData)
@@ -12,6 +9,7 @@ interface ILocalBase {
     fun getProductsFromSubcategory(subcategory: Int): List<Product>
     fun getProductsFromName(name: String): List<Product>
     fun getProductsFromBarcode(barcode: String): List<Product>
-    //fun sell()
-    //fun getOperations()
+    fun saveOperation(operation: Operation)
+    fun getOperations(): List<Operation>
+    fun clearOperations()
 }
