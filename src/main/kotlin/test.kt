@@ -4,17 +4,25 @@ import javafx.print.PrinterJob
 import javafx.scene.Scene
 import javafx.scene.web.WebView
 import javafx.stage.Stage
+import org.krysalis.barcode4j.impl.code128.Code128Bean
+import org.krysalis.barcode4j.output.java2d.Java2DCanvasProvider
+import java.awt.Graphics2D
+import java.awt.print.Printable.NO_SUCH_PAGE
+import java.awt.print.Printable.PAGE_EXISTS
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.stream.Collectors
 
 
 fun main(args: Array<String>) {
-    val positions = ArrayList<Position>()
+
+    printBarcode("1322413423")
+
+    /*val positions = ArrayList<Position>()
     positions.add(Position("afra", "aerfaerf", "23.00", "123.00", "12323.00"))
     positions.add(Position("afra", "aerfaerf", "23.00", "123.00", "12323.00"))
     positions.add(Position("afra", "aerfaerf", "23.00", "123.00", "12323.00"))
-    print(12, "123123123", "34.22.8093", 512, "34:72", positions, "123.00", "123.00", "0.00", "Человек")
+    printCheck(12, "123123123", "34.22.8093", 512, "34:72", positions, "123.00", "123.00", "0.00", "Человек")*/
 }
 
 val HEADER_TEMPLATE = "templates/header.html"
@@ -23,16 +31,16 @@ val FOOTER_TEMPLATE = "templates/footer.html"
 
 val NAME = "Человек-продавец"
 
-fun print(cashbox: Int,
-          inn: String,
-          date: String,
-          number: Int,
-          time: String,
-          positions: List<Position>,
-          sum: String,
-          cash: String,
-          odd: String,
-          operator: String) {
+fun printCheck(cashbox: Int,
+               inn: String,
+               date: String,
+               number: Int,
+               time: String,
+               positions: List<Position>,
+               sum: String,
+               cash: String,
+               odd: String,
+               operator: String) {
     val headerTemplate = String(Files.readAllBytes(Paths.get(HEADER_TEMPLATE)))
     val rowTemplate = String(Files.readAllBytes(Paths.get(ROW_TEMPLATE)))
     val footerTemplate = String(Files.readAllBytes(Paths.get(FOOTER_TEMPLATE)))
@@ -82,3 +90,27 @@ data class Position(
         val count: String,
         val sum: String
 )
+
+fun printBarcode(barcode: String) {
+    val pj = java.awt.print.PrinterJob.getPrinterJob()
+    pj.setPrintable({
+        graphics, page, pageIndex ->
+        run {
+            if (pageIndex > 0) {
+                NO_SUCH_PAGE
+            } else {
+                val bean = Code128Bean()
+                bean.doQuietZone(false);
+                val g2d = graphics as Graphics2D
+                g2d.translate(300, 100)
+                g2d.scale(5.0, 5.0)
+
+                val canvas = Java2DCanvasProvider(g2d, 0)
+                bean.generateBarcode(canvas, barcode)
+
+                PAGE_EXISTS
+            }
+        }
+    })
+    pj.print()
+}
