@@ -50,6 +50,7 @@ object LocalBase : ILocalBase {
     override fun getOperations() = operationDao.load()
 
     override fun clearOperations() {
-
+        operationDao.clear()
+        positionDao.clear()
     }
 }
